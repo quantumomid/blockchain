@@ -15,3 +15,10 @@ Inbox.sol:
 compile.js:
 - Adding expected JSON formatted input, specifying the language, sources, and outputSelection
 - Updating the export to provide the expected JSON formatted output
+
+Inbox.test.js:
+- Updating the import to destructure the abi (formerly the interface) and the evm (bytecode)
+- Change code accordingly with above bullet point (compare with Inbox.test.js from SmartContract if need be)
+
+deploy.js:
+- 
