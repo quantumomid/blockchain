@@ -20,8 +20,25 @@ beforeEach(async () => {
 
 describe("Inbox", () => {
     it("It deploys a contract", () => {
-        console.log(accounts);
-        console.log(inbox);
+        // console.log(accounts);
+        // console.log(inbox);
+        assert.ok(inbox.options.address);
+    })
 
+    it("It has a default message", async () => {
+        // Call the .message() method on the Inbox contract to get the message
+        // use .call() because here we are NOT modifying the contract
+        const message = await inbox.methods.message().call();
+        assert.equal(message, "Salaam there!");
+    })
+
+    it("Message changes as expected", async () => {
+        const newMessage = "Wa alaikum mus Salaam!";
+        // Now we are MODIFYING the contract i.e. therefore will be sending a 
+        // transaction and hence we use the .send() method 
+        await inbox.methods.setMessage(newMessage).send({ from: accounts[0] });
+        // Retireve message and check if it did indeed change
+        const message = await inbox.methods.message().call();
+        assert.equal(message, newMessage);
     })
 })
