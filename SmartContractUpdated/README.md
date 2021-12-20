@@ -13,3 +13,5 @@ Inbox.sol:
 
 
 compile.js:
+- Adding expected JSON formatted input, specifying the language, sources, and outputSelection
+- Updating the export to provide the expected JSON formatted output
