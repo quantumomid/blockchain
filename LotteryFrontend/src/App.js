@@ -1,36 +1,33 @@
-import logo from "./logo.svg";
 import "./App.css";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import web3 from "./web3";
+import lottery from "./lottery";
 
 const App = () => {
-    console.log("web3 version", web3.version);
+    const [ manager, setManager ] = useState("");
     useEffect(() => {
-      const fetchAccounts = async() => {
-        const accounts = await web3.eth.getAccounts();
-        console.log({accounts});
-        return accounts;
+      let isMounted = true;
+
+      const setLotteryManager = async() =>{
+        const lotterManager = await lottery.methods.manager().call();
+        if (isMounted) setManager(lotterManager);
       }
-      fetchAccounts();
-      
+
+      setLotteryManager();
+
+      return () => {
+        isMounted = false;
+      }
     }, []);
-    
+
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+          <h1>Welcome to the Lottery contract! 🥳</h1>
         </header>
+        <main>
+          <h2>This contract is managed by {manager}.</h2>
+        </main>
       </div>
     );
 
