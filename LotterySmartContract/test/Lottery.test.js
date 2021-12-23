@@ -69,4 +69,57 @@ describe("Lottery Contract", () => {
         //Confirm that there are three players in the lottery contract
         assert.equal(3, players.length);
     });
+
+    it("Cannot enter with insufficient ether value", async () => {
+        try {
+            await lottery.methods.enter().send({
+                from: accounts[0], 
+                value: 0
+            });
+            // This will fail the test intentionally if error wasnt thrown 
+            // from code above (because error should be thrown)
+            assert(false);
+        } catch (error) {
+            // To confirm an error was thrown
+            assert(error);
+        }
+    });
+
+    it("Only the manager should be able to pick the pickWinner", async () => {
+        try {
+            // We can just check by trying to use the pickWinner with any account other than
+            // accounts[0] which was used to initialise the lottery contract (see before each)
+            // and thus the manager is accounts[0]
+            await lottery.methods.pickWinner().send({
+                from: accounts[1]
+            });
+        } catch (error) {
+            assert(error);
+        }
+    });
+
+    it("Sends money to winner and resets after", async() => {
+        await lottery.methods.enter().send({
+            from: accounts[0],
+            value: web3.utils.toWei("1", "ether")
+        });
+
+        const initialBalance = await web3.eth.getBalance(accounts[0]);
+
+        await lottery.methods.pickWinner().send({ from: accounts[0] });
+
+        const finalBalance = await web3.eth.getBalance(accounts[0]);
+
+        // Note for the check below we expect an ALMOST 1 ether difference
+        // "Almost" because we also pay GAS each time we change the contract
+        // i.e. because we are making a transaction!
+        const difference = finalBalance - initialBalance;
+
+        //To check the exact balance and also therefore amount spent on gas:
+        // console.log(difference);
+
+        // i.e. instead of asserting an exact difference of 1 ether
+        // we will check for 0.8 to account for the GAS spent!
+        assert(difference > web3.utils.toWei("0.8", "ether"));
+    });
 });
