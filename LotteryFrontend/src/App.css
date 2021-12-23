@@ -14,4 +14,32 @@
   color: white;
 }
 
+form{
+  display: flex;
+  flex-direction: column;
+  background-color: #282c34;
+  color: white;
+  padding: 2vh 0;
+}
 
+form .etherInputContainer{
+  padding: 1vh 0;
+}
+
+form .etherInputContainer input[type="text"]{
+  padding: 2vh;
+  border: none;
+  border-radius: 10%;
+  margin-left: 1vw;
+}
+
+
+form input[type="submit"]{
+  width: fit-content;
+  margin: 0 auto;
+  background-color: white;
+  color: #282c34;
+  padding: 1vh;
+  font-size: 2vw;
+  border-radius: 10%;
+}
