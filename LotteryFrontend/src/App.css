@@ -43,3 +43,19 @@ form input[type="submit"]{
   font-size: 2vw;
   border-radius: 10%;
 }
+
+
+.pickWinnerContainer button{
+  width: fit-content;
+  margin: 0 auto;
+  color: white;
+  background-color: #282c34;
+  padding: 1vh;
+  font-size: 2vw;
+  border-radius: 10%;
+  cursor: pointer;
+}
+
+.pickWinnerContainer button:hover{
+  background-color: #4f5664;
+}

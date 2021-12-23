@@ -3,12 +3,14 @@ import React, { useEffect, useState } from "react";
 import web3 from "./web3";
 import lottery from "./lottery";
 import EnterLotteryForm from "./EnterLotteryForm";
+import PickWinner from "./PickWinner";
 
 const App = () => {
     const [ manager, setManager ] = useState("");
     const [ players, setPlayers ] = useState([]);
     const [ balance, setBalance ] = useState("");
     const [ ether, setEther ] = useState("");
+    const [ message, setMessage ] = useState("");
 
     useEffect(() => {
       let isMounted = true;
@@ -40,10 +42,22 @@ const App = () => {
 
       const accounts = await web3.eth.getAccounts();
       console.log("Attempting to enter lottery with account " + accounts[0] +" and amount " + ether);
+      setMessage("Waiting for transaction to be processsed.......");
       await lottery.methods.enter().send({
         from: accounts[0],
         value: web3.utils.toWei(ether, "ether")
       });
+
+      setMessage("Transaction has been successful!");
+    }
+
+    const handlePickWinner = async () => {
+      const accounts = await web3.eth.getAccounts();
+      setMessage("Waiting for transaction to be processsed.......");
+      await lottery.methods.pickWinner().send({
+        from: accounts[0]
+      });
+      setMessage("The winner of the lottery has been picked!");
     }
 
     return (
@@ -56,6 +70,10 @@ const App = () => {
           <h3>At present, there are { players.length } participants in the contract, who are competing to win {web3.utils.fromWei(balance, "ether")} ether! </h3>
 
           <EnterLotteryForm handleSubmit={handleSubmit} ether={ether} setEther={setEther} />
+
+          <PickWinner handlePickWinner={handlePickWinner} />
+
+          <h3>{message}</h3>
         </main>
       </div>
     );
