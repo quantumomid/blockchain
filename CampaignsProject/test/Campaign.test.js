@@ -32,6 +32,17 @@ describe("Campaigns", () => {
         assert.ok(factory.options.address);
         assert.ok(campaign.options.address);
     });
+
+    it("Campaign caller should be manager", async () => {
+        const manager = await campaign.methods.manager().call();
+        assert(accounts[0], manager);
+    })
+
+    it("Can contribute to campaign and get labelled as approver", async() => {
+        await campaign.methods.contribute().send({ value: "200", from: accounts[1] });
+        const isContributor = await campaign.methods.approvers(accounts[1]).call();
+        assert(isContributor);
+    })
 });
 
 // describe("", () => {
