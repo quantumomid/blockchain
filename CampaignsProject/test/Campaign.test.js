@@ -43,6 +43,46 @@ describe("Campaigns", () => {
         const isContributor = await campaign.methods.approvers(accounts[1]).call();
         assert(isContributor);
     })
+
+    it("Minimum contribution required", async () => {
+        try {
+            await campaign.methods.contribute().send({ value: "5", from: accounts[1] });
+            // The above code should result in error as value is below threshold therefore below
+            // code is for a check to purposefully fail the test if above didnt throw error
+            assert(false);
+        } catch (error) {
+            assert(error);
+        }
+    })
+
+    it("Manager can make payment request", async () => {
+        await campaign.methods.createRequest("Buy raw materials", "100", accounts[1])
+            .send({ from: accounts[0], gas: "1000000" });
+
+        const request = await campaign.methods.requests(0).call();
+
+        assert("Buy raw materials", request.description);
+    })
+
+    it("Requests are processed", async () => {
+        await campaign.methods.contribute().send({ from: accounts[0], value: web3.utils.toWei("10", "ether") });
+
+        await campaign.methods.createRequest("Hire engineer", web3.utils.toWei("5", "ether"), accounts[1])
+            .send({ from: accounts[0], gas: "1000000" });
+
+        await campaign.methods.approveRequest(0).send({ from: accounts[0], gas: "1000000" });
+
+        await campaign.methods.finalizeRequest(0).send({ from: accounts[0], gas: "1000000" });
+    
+        // Convert into Ether first and then into number type from string type
+        let balance = await web3.eth.getBalance(accounts[1]);
+        balance = web3.utils.fromWei(balance, "ether");
+        balance = parseFloat(balance);
+
+        console.log(balance);
+        // Asserting with slightly less than 105 to allow for some leeway
+        assert(balance > 104);
+    })
 });
 
 // describe("", () => {
