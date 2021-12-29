@@ -3,6 +3,7 @@
 
 # next js
 /out/
+/.next/
 
 # local env files
 .env
