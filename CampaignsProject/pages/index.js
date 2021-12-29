@@ -1,7 +1,7 @@
 import React from "react";
 import factory from "../ethereum/factory";
 import { useRouter } from "next/router";
-import { Card } from 'semantic-ui-react'
+import { Card, Button } from 'semantic-ui-react'
 
 export const getStaticProps = async () => {
     const deployedCampaigns = await factory.methods.getDeployedCampaigns().call();
@@ -45,6 +45,11 @@ const CampaignIndex = ({ campaigns }) => {
             />
             <h1>Campaigns Index</h1>
             <h2>{renderCampaigns()}</h2>
+            <Button 
+                content="Create Campaign"
+                icon="add circle"
+                primary
+            />
         </>
     )
 }
