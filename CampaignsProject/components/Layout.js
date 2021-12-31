@@ -6,7 +6,7 @@ import Head from "next/head";
 
 const Layout = ({ children }) => {
     return (
-        <Container>
+        <Container >
             <Head>
                 <link
                     async

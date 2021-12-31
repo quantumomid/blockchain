@@ -4,18 +4,19 @@ const Header = () => (
     <Menu 
         as="header" 
         style={{ marginTop: 10 }}
+        inverted
     >
-        <Menu.Item>
+        <Menu.Item >
         Campaign Coin
         </Menu.Item>
 
 
         <Menu.Menu position='right'>
-        <Menu.Item>
+        <Menu.Item >
             Campaigns
         </Menu.Item>
 
-        <Menu.Item>
+        <Menu.Item >
             +
         </Menu.Item>
         </Menu.Menu>
