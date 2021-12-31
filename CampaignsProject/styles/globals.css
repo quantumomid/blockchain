@@ -1,7 +1,8 @@
 footer {
-    background: #111;
-    color: #ffff;
-    padding: 40px;
+    /* background: #111; */
+    border-top: 3px solid black;
+    color: black;
+    padding: 20px;
     text-align: center;
-    margin-top: auto
+    margin-top: 20vh;
   }

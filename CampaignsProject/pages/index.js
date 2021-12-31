@@ -38,11 +38,6 @@ const CampaignIndex = ({ campaigns }) => {
 
     return (
         <div>
-        <link
-            async
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/semantic-ui@2/dist/semantic.min.css"
-            />
             <h1>Campaigns Index</h1>
             <Button
                 floated="right" 
