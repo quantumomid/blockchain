@@ -6,10 +6,12 @@ import web3 from '../../ethereum/web3';
 const NewCampaign = () => {
     const [ minimumContribution, setMinimumContribution ] = useState(0);
     const [ submissionError, setSubmissionError ] = useState("");
+    const [ loading, setLoading ] = useState(false);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
+        setLoading(true);
+        setSubmissionError("");
         try {
             const accounts = await web3.eth.getAccounts();
             await factory.methods.createCampaign(minimumContribution)   
@@ -17,8 +19,8 @@ const NewCampaign = () => {
         } catch (error) {
             setSubmissionError(error.message);
         }
-
-    };
+        setLoading(false);
+    };  
 
     return (
         <>
@@ -38,7 +40,7 @@ const NewCampaign = () => {
                     header="Oooops!"
                     content={submissionError}
                 />
-                <Button type='submit' primary>Create</Button>
+                <Button type='submit' primary loading={loading}>Create</Button>
             </Form>
         </>
     )
