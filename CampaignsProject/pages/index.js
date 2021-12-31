@@ -44,12 +44,13 @@ const CampaignIndex = ({ campaigns }) => {
             href="https://cdn.jsdelivr.net/npm/semantic-ui@2/dist/semantic.min.css"
             />
             <h1>Campaigns Index</h1>
-            <h2>{renderCampaigns()}</h2>
-            <Button 
+            <Button
+                floated="right" 
                 content="Create Campaign"
                 icon="add circle"
                 primary
             />
+            {renderCampaigns()}
         </div>
     )
 }
