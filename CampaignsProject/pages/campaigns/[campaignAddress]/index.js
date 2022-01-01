@@ -1,8 +1,9 @@
 import { useRouter } from "next/router";
 import factory from "../../../ethereum/factory";
 import CampaignContract from "../../../ethereum/campaign";
-import { Card } from "semantic-ui-react";
+import { Button, Card, Grid } from "semantic-ui-react";
 import web3 from "../../../ethereum/web3";
+import ContributeForm from "../../../components/ContributeForm";
 
 export const getStaticPaths = async () => {
 
@@ -26,6 +27,7 @@ export const getStaticProps = async ({ params }) => {
 
     return {
         props: {
+            address: params.campaignAddress,
             minimumContribution: summary[0],
             balance: summary[1],
             requestsCount: summary[2],
@@ -37,8 +39,8 @@ export const getStaticProps = async ({ params }) => {
       };
 }
 
-const Campaign = ({ minimumContribution, balance, requestsCount, approversCount, manager }) => {
-    console.log({ minimumContribution, balance, requestsCount, approversCount, manager });
+const Campaign = ({ address, minimumContribution, balance, requestsCount, approversCount, manager }) => {
+    console.log({ address, minimumContribution, balance, requestsCount, approversCount, manager });
     const router = useRouter();
     const { isFallback } = router;
    
@@ -81,7 +83,26 @@ const Campaign = ({ minimumContribution, balance, requestsCount, approversCount,
     return (
         <section>
             <h1>This is the Campaign page</h1>  
-            {renderCards()}
+            <Grid>
+                <Grid.Row>
+                    <Grid.Column width={10}>
+                        {renderCards()}
+                    </Grid.Column>
+                    <Grid.Column width={6}>   
+                        <ContributeForm address={address} />
+                    </Grid.Column>
+                </Grid.Row>
+                <Grid.Row>
+                    <Grid.Column>
+                        <Button 
+                            primary 
+                            onClick={() => router.push("/campaigns/" + address + "/requests")}
+                        >
+                            View Requests
+                        </Button>
+                    </Grid.Column>
+                </Grid.Row>
+            </Grid>
         </section>
     )
 }
