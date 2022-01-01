@@ -1,10 +1,11 @@
 import { useRouter } from "next/router";
 import factory from "../../../ethereum/factory";
+import CampaignContract from "../../../ethereum/campaign";
 
 export const getStaticPaths = async () => {
 
     const deployedCampaigns = await factory.methods.getDeployedCampaigns().call();
-    // console.log(deployedCampaigns);
+    console.log(deployedCampaigns);
 
     const campaignPaths = deployedCampaigns.map(campaignAddress => ({ params: { campaignAddress } }))
 
@@ -15,25 +16,34 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps = async ({ params }) => {
-    // const deployedCampaigns = await factory.methods.getDeployedCampaigns().call();
-    // console.log(deployedCampaigns);
+    // console.log({params});
+    const deployedCampaign = CampaignContract(params.campaignAddress);
+    // console.log(deployedCampaign);
+    const summary = await deployedCampaign.methods.getSummary().call();
+    // console.log(summary);
+
     return {
         props: {
-        //   campaigns: deployedCampaigns,
-            param: params
+            minimumContribution: summary[0],
+            balance: summary[1],
+            requestsCount: summary[2],
+            approversCount: summary[3],
+            manager: summary[4],
+
         },
         revalidate: 1,
       };
 }
 
-const Campaign = ({ param }) => {
-    console.log(param);
+const Campaign = ({ minimumContribution, balance, requestsCount, approversCount, manager }) => {
+    console.log({ minimumContribution, balance, requestsCount, approversCount, manager });
     const router = useRouter();
     const { isFallback } = router;
    
     if (isFallback) {
       return <div>Loading...</div>;
     }
+
     return (
         <h1>This is the Campaign page</h1>
     )
