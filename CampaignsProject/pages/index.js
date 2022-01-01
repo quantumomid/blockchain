@@ -2,6 +2,7 @@ import React from "react";
 import factory from "../ethereum/factory";
 import { useRouter } from "next/router";
 import { Card, Button } from 'semantic-ui-react'
+import Link from "next/link";
 
 export const getStaticProps = async () => {
     const deployedCampaigns = await factory.methods.getDeployedCampaigns().call();
@@ -28,7 +29,9 @@ const CampaignIndex = ({ campaigns }) => {
         const items = campaigns.map(campaignAddress => {
             return {
                 header: campaignAddress,
-                description: <a>View Campaign</a>,
+                description: (
+                    <Link href={"/campaigns/"+campaignAddress}><a>View Campaign</a></Link>
+                ),
                 fluid: true
             };
         });
@@ -43,7 +46,9 @@ const CampaignIndex = ({ campaigns }) => {
                 floated="right" 
                 content="Create Campaign"
                 icon="add circle"
-                primary
+                // primary
+                secondary
+                onClick={() => router.push("/campaigns/new")}
             />
             {renderCampaigns()}
         </div>

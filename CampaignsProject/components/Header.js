@@ -1,4 +1,5 @@
 import { Menu } from 'semantic-ui-react'
+import Link from 'next/link'
 
 const Header = () => (
     <Menu 
@@ -7,17 +8,17 @@ const Header = () => (
         inverted
     >
         <Menu.Item >
-        Campaign Coin
+            <Link href="/"><a>Campaign Coin</a></Link>
         </Menu.Item>
 
 
         <Menu.Menu position='right'>
         <Menu.Item >
-            Campaigns
+            <Link href="/"><a>Campaigns</a></Link>
         </Menu.Item>
 
         <Menu.Item >
-            +
+            <Link href="/campaigns/new"><a>+</a></Link>
         </Menu.Item>
         </Menu.Menu>
     </Menu>
