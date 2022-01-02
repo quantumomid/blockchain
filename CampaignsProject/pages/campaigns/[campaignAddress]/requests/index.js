@@ -38,8 +38,16 @@ const CampaignRequests = ({ address, requests, requestCount, approversCount }) =
     return (
         <>
             <h1>This is the Campaign Requests page</h1>
-            <RequestsTable requests={requests} approversCount={approversCount} />
-            <Button primary onClick={() => router.push("/campaigns/"+address+"/requests/new")}>Add Request</Button>
+            <Button 
+                primary 
+                floated="right"
+                onClick={() => router.push("/campaigns/"+address+"/requests/new")}
+                style={{ marginBottom: 10 }}
+            >
+                Add Request
+            </Button>
+            <RequestsTable requests={requests} approversCount={approversCount} address={address} />
+            <p>Found { requestCount } requests.</p>
         </>
     )
 }
