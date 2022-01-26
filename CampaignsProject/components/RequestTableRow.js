@@ -10,7 +10,7 @@ const RequestsTableRow = ({ request, id, approversCount, address, submissionErro
     const [ approveLoading, setApproveLoading ] = useState(false);
     const [ finaliseLoading, setFinaliseLoading ] = useState(false);
 
-    console.log({id});
+    // console.log({id});
     const readyToFinalise = request.approvalCount > approversCount/2;
 
     const handleApprove = async () => {

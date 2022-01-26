@@ -8,7 +8,7 @@ import ContributeForm from "../../../components/ContributeForm";
 export const getStaticPaths = async () => {
 
     const deployedCampaigns = await factory.methods.getDeployedCampaigns().call();
-    console.log(deployedCampaigns);
+    // console.log(deployedCampaigns);
 
     const campaignPaths = deployedCampaigns.map(campaignAddress => ({ params: { campaignAddress } }))
 

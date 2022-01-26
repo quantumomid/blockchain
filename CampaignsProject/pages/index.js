@@ -16,7 +16,7 @@ export const getStaticProps = async () => {
 }
 
 const CampaignIndex = ({ campaigns }) => {
-    console.log(campaigns);
+    // console.log(campaigns);
     const router = useRouter();
     const { isFallback } = router;
    
