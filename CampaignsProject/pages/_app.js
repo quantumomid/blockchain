@@ -8,6 +8,7 @@ function MyApp({ Component, pageProps }) {
         <Layout>
             <Head>
                 <title>Campaigner</title>
+                <link rel="icon" href="/favicon.ico" />
             </ Head>
             <Component {...pageProps} />
         </Layout>
